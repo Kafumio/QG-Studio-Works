@@ -122,6 +122,7 @@ public class SingleLinkedListDemo {
 }
 
 class Utils{
+    //展示链表操作
     public static void show(){
         System.out.print("单链表ADT\n\n");
         System.out.println("1.创建空链表");
@@ -138,6 +139,7 @@ class Utils{
         System.out.print("\n请输入对应的数字(1-11)：");
     }
 
+    //保证合法输入数据
     public static int judge_scanf(){
         int len = 0, num = 0, arg = 1;
         char[] word = new char[10];

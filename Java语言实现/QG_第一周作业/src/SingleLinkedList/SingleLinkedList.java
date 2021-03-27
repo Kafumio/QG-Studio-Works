@@ -4,16 +4,19 @@ public class SingleLinkedList {
     public LNode head;
     public int size;
 
+    //初始化单链表
     public SingleLinkedList() {
         this.head = null;
         this.size = 0;
     }
 
+    //销毁链表
     public void DestroyList() {
         head = null;
         size = 0;
     }
 
+    //插入新节点
     public boolean InsertList(int index, int data) {
         if (index > size){
             return false;
@@ -28,6 +31,7 @@ public class SingleLinkedList {
         return true;
     }
 
+    //删除节点
     public boolean DeleteList(int index) {
         if (index > size){
             return false;
@@ -45,6 +49,7 @@ public class SingleLinkedList {
         return true;
     }
 
+    //遍历链表
     public void TravelList() {
         LNode p = head;
         while (p != null) {
@@ -54,6 +59,7 @@ public class SingleLinkedList {
         System.out.print("\n");
     }
 
+    //查询数值是否存在
     public boolean SearchList(int data) {
         while (head != null) {
             if (head.data == data) {
@@ -64,6 +70,7 @@ public class SingleLinkedList {
         return false;
     }
 
+    //反转链表
     public boolean ReverseList() {
         if (head == null) {
             return false;
@@ -80,6 +87,7 @@ public class SingleLinkedList {
         return true;
     }
 
+    //判断链表是否成环
     public boolean isLoopList() {
         if (head == null) {
             return false;
@@ -96,6 +104,7 @@ public class SingleLinkedList {
         return false;
     }
 
+    //反转链表的偶数节点和奇数节点
     public LNode ReverseEvenList() {
         LNode p1, p2, h, t = null;
         int n = 0;
@@ -118,6 +127,7 @@ public class SingleLinkedList {
         return h;
     }
 
+    //获取链表中间节点数据
     public LNode FindMidNode() {
         LNode p1, p2;
         p1 = p2 = head;
@@ -135,6 +145,7 @@ public class SingleLinkedList {
         return p1;
     }
 
+    //获取index位置的节点
     public LNode getNode(int index) {
         if (index > size) {
             return null;

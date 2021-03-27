@@ -7,16 +7,19 @@ public class DoubleLinkedList {
     public DuLNode end;
     public int size;
 
+    //初始化双链表
     public DoubleLinkedList(){
         this.head = this.end = null;
         this.size = 0;
     }
 
+    //销毁链表
     public void DestroyList_Dul() {
         head = end = null;
         size = 0;
     }
 
+    //在某个节点前插入新节点
     public boolean InsertBeforeList_Dul(int index,int data){
         if (index > size){
             return false;
@@ -31,6 +34,7 @@ public class DoubleLinkedList {
         return true;
     }
 
+    //在某个节点后插入
     public boolean InsertAfterList_Dul(int index,int data){
         if (index > size){
             return false;
@@ -45,6 +49,7 @@ public class DoubleLinkedList {
         return true;
     }
 
+    //删除节点
     public boolean DeleteList_Dul(int index) {
         if (index > size){
             return false;
@@ -63,6 +68,7 @@ public class DoubleLinkedList {
         return true;
     }
 
+    //遍历链表
     public void TravelList() {
         DuLNode p = head;
         while (p != null) {
@@ -72,11 +78,13 @@ public class DoubleLinkedList {
         System.out.print("\n");
     }
 
+    //获取index位置的节点
     public DuLNode getNode(int index) {
         if (index > size) {
             return null;
         }
         DuLNode node = null;
+        //二分判断从头指针还是尾指针开始查找，提高查找效率
         if (index <= size/2) {
             node = head;
             for (int i = 0; i < index; i++) {

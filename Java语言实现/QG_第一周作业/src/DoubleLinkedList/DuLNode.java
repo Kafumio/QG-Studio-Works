@@ -1,5 +1,6 @@
 package DoubleLinkedList;
 
+//链表节点类
 public class DuLNode {
     public int data;
     public DuLNode prior;

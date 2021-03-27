@@ -1,5 +1,6 @@
 package SingleLinkedList;
 
+//链表节点类
 public class LNode {
     public int data;
     public LNode next;
