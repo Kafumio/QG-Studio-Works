@@ -55,10 +55,11 @@ Status InsertBeforeList_DuL(DuLNode* p, DuLNode* q) {
     if (p->prior) {
         q->prior = p->prior;
         p->prior->next = q;
+        q->next = p;
+        p->prior = q;
+        return SUCCESS;
     }
-    q->next = p;
-    p->prior = q;
-    return SUCCESS;
+    return ERROR;
 }
 
 /**
@@ -116,7 +117,7 @@ Status DeleteList_DuL(DuLNode* p, ElemType* e) {
  *  @notice      : None
  */
 void TraverseList_DuL(DuLinkedList L, void (*visit)(ElemType e)) {
-    L = L->next;
+    L = L ->next;
     while (L) {
         visit(L->data);
         L = L->next;

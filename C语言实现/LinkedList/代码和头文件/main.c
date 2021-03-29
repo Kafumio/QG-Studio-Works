@@ -20,7 +20,7 @@ int main()
     do
     {
         show();
-        scanf("%d",&choice);
+        choice = judge_scanf();
         system("cls");
         switch(choice)
         {
@@ -38,15 +38,20 @@ int main()
             }
             case 2://销毁链表
             {
-                DestroyList(&head);
-                printf("链表销毁完成\n");
+                if (!head)
+                {
+                    printf("链表不存在，请先创建链表\n");
+                }else{
+                    DestroyList(&head);
+                    printf("链表销毁完成\n");
+                }
                 break;
             }
             case 3://插入节点
             {
                 if(head == NULL)
                 {
-                    printf("链表为空， 请先创建链表\n");
+                    printf("链表不存在，请先创建链表\n");
                 }
                 else
                 {
@@ -65,23 +70,32 @@ int main()
             }
             case 4://删除节点
             {
-                printf("你想删除第几个节点之后的节点：");
-                scanf("%d",&num);
-                if(DeleteList(getNode(head,num),e))
+                if (!head)
                 {
-                    printf("删除成功,被删除的节点数据为%d\n",*e);
-                }
-                else
-                {
-                	printf("删除失败\n");
+                   printf("链表不存在，请先创建链表\n");
+                }else{
+                    printf("你想删除第几个节点之后的节点：");
+                    scanf("%d",&num);
+                    if(DeleteList(getNode(head,num),e))
+                    {
+                        printf("删除成功,被删除的节点数据为%d\n",*e);
+                    }
+                    else
+                    {
+                        printf("删除失败\n");
+                    }  
                 }
                 break;
             }
             case 5://遍历链表
             {
-                if(head == NULL || head->next == NULL)
+                if(head == NULL)
                 {
-                    printf("链表不存在或者只存在一个空的头结点\n");
+                    printf("链表不存在，请先创建链表\n");
+                }
+                else if (head->next == NULL)
+                {
+                    printf("链表为空，请先插入节点\n");
                 }
                 else
                 {
@@ -105,11 +119,16 @@ int main()
             }
             case 7://反转链表
             {
-                if(head == NULL || head->next == NULL)
+                if(head == NULL)
                 {
-                    printf("链表为空或者链表只含有两个结点\n");
-                    printf("链表反转失败\n");
+                    printf("链表不存在\n");
+                    printf("链表反转失败,请先创建链表\n");
                 }
+                else if (!head->next)
+                {
+                    printf("链表为空\n");
+                    printf("链表反转失败，请先插入节点\n");
+                }              
                 else
                 {
                     if(ReverseList(&head))
@@ -126,10 +145,14 @@ int main()
             }
             case 8://判断链表是否成环
             {
-                if(head == NULL || head->next == NULL)
+                if(head == NULL)
                 {
-                    printf("链表为空\n");
+                    printf("链表不存在，请先创建链表\n");
                 }
+                else if (!head->next)
+                {
+                    printf("链表为空，请先插入节点\n\n");
+                }  
                 else
                 {
                     if(IsLoopList(head))
@@ -145,16 +168,30 @@ int main()
             }
             case 9://反转链表中的偶数结点
             {
-                ReverseEvenList(&head);
-                printf("操作成功！\n");
+                if(head == NULL)
+                {
+                    printf("链表不存在，请先创建链表\n");
+                }
+                else if (!head->next)
+                {
+                    printf("链表为空，请先插入节点\n\n");
+                } 
+                else{
+                    ReverseEvenList(&head);
+                    printf("操作成功！\n");
+                }
                 break;
             }
             case 10://查找中间结点
             {
-                if(head == NULL || head->next == NULL)
+                if(head == NULL)
                 {
-                    printf("这是空链表\n");
+                    printf("链表不存在，请先创建链表\n");
                 }
+                else if (!head->next)
+                {
+                    printf("链表为空，请先插入节点\n\n");
+                } 
                 else
                 {
                     FindMidNode(&head);
@@ -208,9 +245,9 @@ int judge_scanf()  //防止用户输入不合法的数据
         len = strlen(word);
         for(m = 0;m<len;m++)
         {
-            if(word[m]<'0' || word[m]>'9')  //检验是否有乱输入其他字符
+            if((word[m]<'0' || word[m]>'9') && word[m] != '-')  //检验是否有乱输入其他字符
             {
-                printf("请输入整数：");
+                printf("你输入的不是整数，请重新输入：");
                 break;
             }
             else 
@@ -223,11 +260,25 @@ int judge_scanf()  //防止用户输入不合法的数据
     j = len-1;
     for(m=0;m<len;m++)  // 将字符重新转换为数字
     {
-        for(k=0;k<j;k++)
+        if (word[m] == '-')
+        {
+            continue;
+        }
+        
+        for(k=0;k<j;k++){
             arg *= 10;
+        }
         num += (word[m]-'0')*arg;
         arg = 1;
-        j--;
+        j--;  
+    }
+    for (m = 0; m < strlen(word); m++)
+    {
+        if (word[m] == '-')
+        {
+            return -num/10;
+        }
+        
     }
     return num;
 } 
@@ -251,7 +302,7 @@ LinkedList createNode()//创建一个新节点
 {
     LinkedList q;
     q = (LinkedList)malloc(sizeof(LNode));
-    printf("请输入你要插入的数据：");
+    printf("请输入你要插入的整数数据：");
     q->data = judge_scanf();
     return q;
 }

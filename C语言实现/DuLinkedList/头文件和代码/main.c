@@ -18,7 +18,7 @@ int main() {
 
     do {
         show();
-        scanf("%d", &choice);
+        choice = judge_scanf();
         system("cls");
         switch (choice)
         {
@@ -27,6 +27,7 @@ int main() {
             if (InitList_DuL(&head))
             {
                 printf("空链表创建成功\n");
+                printf("默认第一个节点为头节点，头节点前不可插入数据\n");
             }
             else
             {
@@ -36,8 +37,13 @@ int main() {
         }
         case 2://销毁链表
         {
-            DestroyList_DuL(&head);
-            printf("链表销毁成功\n");
+            if (!head)
+            {
+                printf("链表不存在，请先创建链表\n");
+            }else{
+                DestroyList_DuL(&head);
+                printf("链表销毁完成\n");
+            }
             break;
         }
         case 3://在某个节点前插入数据
@@ -102,7 +108,18 @@ int main() {
         }
         case 6://遍历链表
         {
-            TraverseList_DuL(head, visit);
+            if(head == NULL)
+            {
+                printf("链表不存在，请先创建链表\n");
+            }
+            else if (head->next == NULL)
+            {
+                printf("链表为空，请先插入节点\n");
+            }
+            else
+            {
+                TraverseList_DuL(head,visit);
+            }
             break;
         }
         case 7://退出程序 
@@ -136,39 +153,51 @@ void show(void)
 int judge_scanf()  //防止用户输入不合法的数据
 {
     int len, num = 0, arg = 1;
-    char word[10] = {0};
-    int m, j = 1, k;
-    while (j)
+    char word[10];  
+    int m, j= 1, k;
+    while(j)
     {
-        scanf("%s", word ,10);
+        scanf("%s", word);
         len = strlen(word);
-        for (m = 0; m < len; m++)
+        for(m = 0;m<len;m++)
         {
-            if (word[m] < '0' || word[m]>'9')  //检验是否有乱输入其他字符
+            if((word[m]<'0' || word[m]>'9') && word[m] != '-')  //检验是否有乱输入其他字符
             {
-                printf("请输入整数：");
+                printf("你输入的不是整数，请重新输入：");
                 break;
             }
-            else
+            else 
             {
-                if (m == len - 1)
+                if(m == len-1)
                     j = 0;
             }
         }
     }
-    j = len - 1;
-    for (m = 0; m < len; m++)  // 将字符重新转换为数字
+    j = len-1;
+    for(m=0;m<len;m++)  // 将字符重新转换为数字
     {
-        for (k = 0; k < j; k++)
+        if (word[m] == '-')
         {
+            continue;
+        }
+        
+        for(k=0;k<j;k++){
             arg *= 10;
         }
-        num += (word[m] - '0') * arg;
+        num += (word[m]-'0')*arg;
         arg = 1;
-        j--;
+        j--;  
+    }
+    for (m = 0; m < strlen(word); m++)
+    {
+        if (word[m] == '-')
+        {
+            return -num/10;
+        }
+        
     }
     return num;
-}
+} 
 
 //找到需要用到的节点
 DuLinkedList getNode(DuLinkedList h, int n)
