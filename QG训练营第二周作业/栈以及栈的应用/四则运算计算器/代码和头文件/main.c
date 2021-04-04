@@ -9,14 +9,14 @@ int Priority(char ch);//获取优先级
 int judge_scanf();//规范输入
 
 int main() {
-    printf("该计算器仅支持含有整数，小数与加减乘除和括号的运算，不支持负数运算\n");
+    printf("该计算器仅支持含有整数，小数与加减乘除和括号的运算，不支持负数运算,运算结果自动保留到小数点后两位\n");
     if (!initLStack(&s_num) || !initLStack(&s_opt))//将数字栈和运算符栈进行初始化
     {
         printf("初始化失败！\n");
         return -1;
     }
 
-    char opt[128] = { 0 }, sign = '!', q = '!';
+    char opt[1024] = {0}, sign = '!', q = '!';
     int i = 0, choice = 0,check = 1;//check作为判断表达式是否规范的标志
     double tmp = 0, num1 = 0,little = 1.0, num2 = 0, result = 0;
 
@@ -26,16 +26,12 @@ int main() {
         show();
         choice = judge_scanf();
         system("cls");
-        for (int j = 0; j < sizeof(opt); j++)
-        {
-            opt[j] = '\0';
-        }
         switch (choice)
         {
         case 1:
         {
             printf("请输入运算表达式：");
-            scanf("%s", opt);
+            scanf("%s",opt);
             while (opt[i] != '\0' || !isEmptyLStack(&s_opt))
             {
                 if (opt[i] >= '0' && opt[i] <= '9')
@@ -164,18 +160,18 @@ int Priority(char ch)
 {
     switch (ch)
     {
-    case '(':
-        return 3;
-    case '*':
-        return 2;
-    case '/':
-        return 2;
-    case '+':
-        return 1;
-    case '-':
-        return 1;
-    default:
-        return 0;
+        case '(':
+            return 3;
+        case '*':
+            return 2;
+        case '/':
+            return 2;
+        case '+':
+            return 1;
+        case '-':
+            return 1;
+        default:
+            return 0;
     }
 }
 
