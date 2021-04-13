@@ -101,8 +101,8 @@ Status TraverseAQueue(const AQueue *Q, void (*foo)(void *q)) {
     {
         return FALSE;
     }	
-	int i = Q->front + 1;
-	while (i <= (MAXQUEUE - Q->front + Q->rear) % MAXQUEUE ) {
+	int i = (Q->front + 1) % MAXQUEUE;
+	while (i <= (MAXQUEUE + Q->rear) % MAXQUEUE ) {
         type = datatype[i];
 		foo(Q->data[i]);	
 		i = (i + 1) % MAXQUEUE;

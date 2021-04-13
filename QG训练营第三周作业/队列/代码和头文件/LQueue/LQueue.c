@@ -77,7 +77,7 @@ int LengthLQueue(LQueue *Q) {
 
 Status EnLQueue(LQueue *Q, void *data) {
 	Node *p = (Node *)malloc(sizeof(Node));
-	if (p == NULL)
+	if (IsEmptyLQueue(Q) && (Q->front == NULL || Q->rear == NULL))
     {
         printf("队列未初始化，请先初始化队列！\n");
         return FALSE;

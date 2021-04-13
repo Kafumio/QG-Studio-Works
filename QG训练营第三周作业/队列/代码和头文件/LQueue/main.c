@@ -8,6 +8,7 @@ LQueue Q;
 
 void show();//展示操作列表
 int option_scanf();
+int judge_scanf();
 
 int main(){
     int choice = 0,flag = 0,value1;
@@ -17,7 +18,7 @@ int main(){
     do
     {
         show();
-        scanf("%d",&choice);
+        choice = judge_scanf();
         system("cls");
         switch (choice)
         {
@@ -46,7 +47,7 @@ int main(){
                 int flag = option_scanf();
                 if (flag == 1)
                 {
-                    scanf("%d",&value1);
+                    value1 = judge_scanf();
                     Q.length = sizeof(int);
                     if (EnLQueue(&Q,&value1))
                     {
@@ -156,3 +157,52 @@ int option_scanf(){
     }
     return option;
 }
+
+int judge_scanf()  //防止用户输入不合法的数据
+{
+    int len, num = 0, arg = 1;
+    char word[10];  
+    int m, j= 1, k;
+    while(j)
+    {
+        scanf("%s", word);
+        len = strlen(word);
+        for(m = 0;m<len;m++)
+        {
+            if((word[m]<'0' || word[m]>'9') && word[m] != '-')  //检验是否有乱输入其他字符
+            {
+                printf("你输入的不是整数，请重新输入：");
+                break;
+            }
+            else 
+            {
+                if(m == len-1)
+                    j = 0;
+            }
+        }
+    }
+    j = len-1;
+    for(m=0;m<len;m++)  // 将字符重新转换为数字
+    {
+        if (word[m] == '-')
+        {
+            continue;
+        }
+        
+        for(k=0;k<j;k++){
+            arg *= 10;
+        }
+        num += (word[m]-'0')*arg;
+        arg = 1;
+        j--;  
+    }
+    for (m = 0; m < strlen(word); m++)
+    {
+        if (word[m] == '-')
+        {
+            return -num/10;
+        }
+        
+    }
+    return num;
+} 
